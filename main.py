@@ -35,20 +35,26 @@ class MainHandler(webapp2.RequestHandler):
         main = t.render()
         self.response.write(main)
 
-#    def post(self):
-#        title = self.request.get('title')
-#        content = "<h1>thanks for writing about " + title + " today</h1>"
-#        self.response.write(content)
+    def post(self):
+        title = self.request.get('title')
+        post = self.request.get('post')
+        new_post = PostHandler(title = title, post = post)
+        new_post.put()
+        content = "thanks for posting about " + title
+        self.response.write(content)
 
 
 #class ViewPostHandler(webapp2.RequestHandler):
 #    def get(self, id):
-#        self.response.write(id)
+#        title = self.request.get('title')
+#        post = self.request.get('post')
+#        content = title + post
+#        self.response.write(content)
 
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
 #    ('/blog/newpost', PostHandler),
-#    webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
+#  webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
 ], debug=True)
