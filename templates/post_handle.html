@@ -3,9 +3,12 @@
     <head>
         <title>New Post</title>
     </head>
-
     <body>
-        <div>{{title}}</div>
-        <div>{{post}}</div>
+        <div>a sanity check</div>
+    {% for i in post %}
+        <div>{{ i.title }}</div>
+        <div>{{ i.post }}</div>
+        <div>{{ i.created }}</div>
+    {% endfor %}
     </body>
 </html>

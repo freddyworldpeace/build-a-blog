@@ -43,18 +43,22 @@ class MainHandler(webapp2.RequestHandler):
         self.redirect('/blog')
 
 
-class ViewPostHandler(webapp2.RequestHandler):
-    def get(self, id):
-        post_q = PostHandler.get_by_id(int(id))
-        title = post_q.title
-        post = post_q.post
+class AllPostHandler(webapp2.RequestHandler):
+    def get(self):
+        #q = db.Query(PostHandler)
+        #test = q.get()
+        #title = test.title
+        #post = test.post
+
+        q = PostHandler.all().order('-created')
         t = jinja_env.get_template('post_handle.html')
-        main = t.render(title = title, post = post)
+        main = t.render(post = q)
         self.response.write(main)
 
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
+    ('/blog', AllPostHandler),
+    #webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
 ], debug=True)
