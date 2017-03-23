@@ -36,25 +36,21 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(main)
 
     def post(self):
-        the_title = self.request.get('title')
-        the_post = self.request.get('post')
-        new_post = PostHandler(title = the_title, post = the_post)
-        new_post.put()
+        theTitle = self.request.get('title')
+        thePost = self.request.get('post')
+        newPost = PostHandler(title = theTitle, post = thePost)
+        postKey = newPost.put()
         self.redirect('/blog')
 
-
-class AllPostHandler(webapp2.RequestHandler):
+class AllPostHandler(MainHandler):
     def get(self):
-        #q = db.Query(PostHandler)
-        #test = q.get()
-        #title = test.title
-        #post = test.post
-
-        q = PostHandler.all().order('-created')
+        q = PostHandler.all()
         t = jinja_env.get_template('post_handle.html')
         main = t.render(post = q)
         self.response.write(main)
 
+#class ViewPostHandler(id, AllPostHandler):
+    #def get(self):
 
 
 app = webapp2.WSGIApplication([
